@@ -11,7 +11,7 @@ syntax match potionComment "\v#.*$"
 highlight link potionComment Comment
 
 " Operators
-let potionOperators = ['"\v\*"', '"\v/"', '"\v\+"', '"\v\-"', '"\v\?"', '"\v\*\="', '"\v/\="', '"\v\+\="', '"\v-\="', '"\v\="']
+let potionOperators = ['"\v\*"', '"\v/"', '"\v\+"', '"\v\-"', '"\v\?"', '"\v\*\="', '"\v/\="', '"\v\+\="', '"\v-\="', '"\v\="', '"\v:"', '"\v\."']
 
 for op in potionOperators
     execute "syntax match potionOperator" op
@@ -22,6 +22,11 @@ highlight link potionOperator Operator
 syntax match potionNumber "\v0x\x\+"
 syntax match potionNumber "\v[0-9]+(.[0-9]*)?(e[+-][0-9]+)?"
 highlight link potionNumber Number
+
+" Strings
+syntax region potionString start=/\v"/ skip=/\v\\./ end=/\v"/
+syntax region potionString start=/\v'/ skip=/\v\\./ end=/\v'/
+highlight link potionString String
 
 let b:current_syntax = "potion"
 
