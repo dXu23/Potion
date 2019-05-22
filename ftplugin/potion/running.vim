@@ -4,14 +4,21 @@ endif
 
 function! PotionCompileAndRunFile()
     silent !clear
+    write
     execute "!" . g:potion_command . " " . bufname("%")
 endfunction
 
 function! PotionShowBytecode()
+    write
     " Get the bytecode.
     let bytecode = system(g:potion_command . " -c -V " . bufname("%") . " 2>&1")
     " Open a new split and set it up.
-    vsplit __Potion_Bytecode__
+    let BytecodeWinNum = bufwinnr("__Potion_Bytecode__")
+    if BytecodeWinNum < 0
+        vsplit __Potion_Bytecode__
+    else
+        execute BytecodeWinNum . "wincmd w"
+    endif
     normal! ggdG
     setlocal filetype=potionbytecode
     setlocal buftype=nofile
